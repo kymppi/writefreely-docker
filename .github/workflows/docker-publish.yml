@@ -32,9 +32,11 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=registry,ref=kymppi/writefreely-docker:buildcache
+          cache-to: type=registry,ref=kymppi/writefreely-docker:buildcache,mode=max
           build-args: |
             "REPOSITORY=https://github.com/writefreely/writefreely.git"
             "VERSION=v0.13.1"
           tags: |
-            kymppi/writefreely:latest
-            ghcr.io/kymppi/writefreely:latest
+            kymppi/writefreely-docker:latest
+            ghcr.io/kymppi/writefreely-docker:latest
