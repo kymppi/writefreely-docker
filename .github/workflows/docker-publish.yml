@@ -38,5 +38,4 @@ jobs:
             "REPOSITORY=https://github.com/writefreely/writefreely.git"
             "VERSION=v0.13.1"
           tags: |
-            kymppi/writefreely-docker:latest
             ghcr.io/kymppi/writefreely-docker:latest
