@@ -32,9 +32,9 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          build-args:
-            - REPOSITORY=https://github.com/writefreely/writefreely.git
-            - VERSION=v0.13.1
+          build-args: |
+            "REPOSITORY=https://github.com/writefreely/writefreely.git"
+            "VERSION=v0.13.1"
           tags: |
             kymppi/writefreely:latest
             ghcr.io/kymppi/writefreely:latest
