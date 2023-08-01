@@ -3,7 +3,7 @@ name: Docker publish
 on:
   push:
     branches:
-      - "main"
+      - 'main'
 
 jobs:
   docker:
@@ -12,24 +12,22 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up QEMU
+      - name: Read build environment
+        uses: falti/dotenv-action@v1
+        id: dotenv
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      -
-        name: Login to GitHub Container Registry
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -38,7 +36,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            "REPOSITORY=https://github.com/writefreely/writefreely.git"
-            "VERSION=v0.13.1"
+            "REPOSITORY=${{ steps.dotenv.outputs.repository }}"
+            "VERSION=${{ steps.dotenv.outputs.version }}"
           tags: |
             ghcr.io/kymppi/writefreely-docker:latest
+            ghcr.io/kymppi/writefreely-docker:${{ steps.dotenv.outputs.version }}
