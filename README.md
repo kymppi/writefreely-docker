@@ -7,7 +7,7 @@ WriteFreely is a clean, minimalist publishing platform made for writers. Start a
 ---
 
 This repository's goal is to provide an easy way to deploy WriteFreely using docker.
-It currently build's a docker image and publishes it to [GitHub Packages](ghcr.io/kymppi/writefreely-docker).
+It currently build's a docker image and publishes it to [GitHub Packages](https://github.com/kymppi/writefreely-docker/pkgs/container/writefreely-docker).
 
 ## Tags
 
@@ -24,4 +24,4 @@ It currently build's a docker image and publishes it to [GitHub Packages](ghcr.i
 
 ## Support
 
-If you have any questions or issues with this repository, please [open an issue](https://github.com/kymppi/writefreely-docker/issues/new).
+If you have any questions or issues with this repository, please contact me at [me@midka.dev](mailto:me@midka.dev) or in Fediverse: [@midka@mementomori.social](https://mementomori.social/@midka).
