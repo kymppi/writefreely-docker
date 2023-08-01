@@ -4,37 +4,24 @@
 
 WriteFreely is a clean, minimalist publishing platform made for writers. Start a blog, share knowledge within your organization, or build a community around the shared act of writing.
 
-___
+---
 
-This project aim to provide an easy way to deploy WriteFreely using docker.
-It currently doesn't provide any docker image, but instead it provides you an easy way to build your own image. I believe that is better, so you can choose the version that you want to deploy (any version or commit from writefreely repository).
+This repository's goal is to provide an easy way to deploy WriteFreely using docker.
+It currently build's a docker image and publishes it to [GitHub Packages](ghcr.io/kymppi/writefreely-docker).
 
-The way that it works is pretty simple. It will just clone and build writefreely using Alpine Linux docker image as a base.
+## Tags
 
-## Setup
-Clone the repository:
+- `latest` - latest writefreely release
+- `<version number>` - specific writefreely release (e.g. `v0.13.1`)
 
-``` sh
-git clone https://github.com/karlprieb/writefreely-docker.git
-```
+## Usage
 
-Edit `.env` file so you can:
-* choose the writefreely repository and version that you want
-* choose external port
-* set the admin username and password
+### File locations
 
-Change/fill your writefreely configuration on `config/config.ini`
+- `/data` - WriteFreely data directory
+- `/config/config.ini` - WriteFreely configuration file (you need to provide this)
+- `/writefreely` - Everything else (WriteFreely binary, templates, static files, etc.)
 
-You can change your volumes bind on `docker-compose.yml` if you want.
+## Support
 
-Launch:
-
-``` sh
-docker-compose up -d
-```
-
-It will create/populate data folder with keys, pages, templates and the sqlite db file. You can backup this folder and also change pages and templates. To update pages and templates you need to restart the container.
-
-If you will run writefreely behind a reverse proxy, which is recommended, you will also need to implement that on docker-compose.yml or add the correct networks if you're already running a reverse proxy.
-
-Please feel free to open issues, reporting problems or to request new features. Also open new PRs if you feel that make sense. 😁
+If you have any questions or issues with this repository, please [open an issue](https://github.com/kymppi/writefreely-docker/issues/new).
