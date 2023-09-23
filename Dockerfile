@@ -1,5 +1,5 @@
 # Build image
-FROM alpine:3.14 as build
+FROM golang:1.21.1-alpine3.18 as build
 
 ARG REPOSITORY
 ARG VERSION
@@ -8,16 +8,21 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:$PATH
 ENV GO111MODULE=on
 
-RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/v3.14/community" >> /etc/apk/repositories && \
-    apk add --no-cache nodejs-current npm go make g++ git && \
-    go install std && \
-    go get -u github.com/go-bindata/go-bindata/... && \
-    npm install -g less less-plugin-clean-css
+LABEL org.opencontainers.image.source=https://github.com/kymppi/writefreely-docker
+LABEL org.opencontainers.image.description="WriteFreely is a clean, minimalist publishing platform made for writers. Start a blog, share knowledge within your organization, or build a community around the shared act of writing."
+
+RUN apk add --update nodejs npm make g++ git
+RUN npm install -g less less-plugin-clean-css
 
 RUN mkdir -p /go/src/github.com/writefreely/writefreely/ && \
     git clone $REPOSITORY /go/src/github.com/writefreely/writefreely/ -b $VERSION
 
 WORKDIR /go/src/github.com/writefreely/writefreely/
+
+COPY ./openssl.conf ./openssl.conf
+RUN cat ./openssl.conf > /etc/ssl/openssl.cnf
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN make build && \
     make ui
@@ -33,7 +38,7 @@ RUN mkdir /stage && \
       mv /stage/cmd/writefreely/writefreely /stage
 
 # Final image
-FROM alpine:3.14
+FROM alpine:3.18
 
 RUN apk add --no-cache openssl ca-certificates
 
